@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -27,9 +28,16 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         mTweets = tweets;
     }
 
+    public void setTweets(List<Tweet> tweets) {
+        mTweets = tweets;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_tweet, parent, false);
+        return new ViewHolder(itemView);
     }
 
     @Override

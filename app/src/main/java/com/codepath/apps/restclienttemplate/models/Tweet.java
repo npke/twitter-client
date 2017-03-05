@@ -71,7 +71,7 @@ public class Tweet extends BaseModel {
 		}
 	}
 
-	public static List<Tweet> fromJsonArray(JSONArray array) {
+	public static ArrayList<Tweet> fromJsonArray(JSONArray array) {
 		ArrayList<Tweet> tweets = new ArrayList<>();
 
 		for (int i = 0; i < array.length(); i++) {

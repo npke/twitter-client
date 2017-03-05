@@ -28,6 +28,11 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         mTweets = tweets;
     }
 
+    public void setTweets(List<Tweet> tweets) {
+        mTweets = tweets;
+        notifyDataSetChanged();
+    }
+
     public void addTweets(List<Tweet> tweets) {
         mTweets.addAll(tweets);
         notifyDataSetChanged();

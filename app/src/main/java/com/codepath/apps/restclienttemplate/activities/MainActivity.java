@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate.activities;
 
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
     @BindView(R.id.recycler_tweets)
     RecyclerView rvTweets;
 
+    @BindView(R.id.swipe_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     PostTweetDialogFragment dialogFragment;
     FragmentManager fragmentManager;
     LinearLayoutManager layoutManager;
@@ -51,6 +55,14 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
 
         dialogFragment = new PostTweetDialogFragment();
         fragmentManager = getSupportFragmentManager();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                page = 0;
+                twitterClient.getHomeTimeline(page, getHomeTimelineResponseHandler());
+            }
+        });
 
         adapter = new TweetAdapter(this, new ArrayList<Tweet>());
         rvTweets.setAdapter(adapter);
@@ -95,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -104,12 +117,18 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
                 ArrayList<Tweet> tweets = Tweet.fromJsonArray(json);
-                adapter.addTweets(tweets);
+                if (page == 0)
+                    adapter.setTweets(tweets);
+                else adapter.addTweets(tweets);
+
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+                swipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         };
     }
@@ -118,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
         return new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Toast.makeText(MainActivity.this, "" + page + 1, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "" + page, Toast.LENGTH_SHORT).show();
                 twitterClient.getHomeTimeline(++page, homeTimelineResponseHandler);
             }
         };

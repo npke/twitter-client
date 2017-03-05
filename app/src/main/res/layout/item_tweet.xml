@@ -42,6 +42,8 @@
                 android:id="@+id/text_tweet_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:linksClickable="true"
+                android:autoLink="all"
                 android:layout_below="@id/text_user_name"
                 android:layout_toRightOf="@id/image_user_profile_photo"
                 tools:text="In addition, we can also add functions into the model to support parsing JSON attributes in order to instantiate the model based on API data. This might look like:" />

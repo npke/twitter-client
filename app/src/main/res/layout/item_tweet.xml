@@ -14,9 +14,10 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:padding="10dp"
                 android:id="@+id/image_user_profile_photo"
-                android:layout_width="60dp"
-                android:layout_height="60dp" />
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
 
             <TextView
                 android:id="@+id/text_user_name"

@@ -33,6 +33,14 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
+    public void addTweet(Tweet tweet, boolean addToLast) {
+        if (addToLast)
+            mTweets.add(tweet);
+        else mTweets.add(0, tweet);
+
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())

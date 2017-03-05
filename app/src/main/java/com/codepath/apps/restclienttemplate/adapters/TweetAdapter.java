@@ -60,6 +60,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         holder.tvUserDisplayName.setText(user.getName());
         holder.tvUserScreenName.setText(user.getUserName());
         holder.tvTweetBody.setText(tweet.getText());
+        holder.tvCreatedAt.setText(tweet.getCreatedAt());
     }
 
     @Override
@@ -79,6 +80,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         @BindView(R.id.text_tweet_body)
         TextView tvTweetBody;
+
+        @BindView(R.id.text_created_at)
+        TextView tvCreatedAt;
 
         public ViewHolder(View itemView) {
             super(itemView);

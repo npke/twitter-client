@@ -1,5 +1,7 @@
 package com.codepath.apps.restclienttemplate.models;
 
+import android.text.format.DateUtils;
+
 import com.codepath.apps.restclienttemplate.MyDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
@@ -12,9 +14,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /*
  * This is a temporary, sample model that demonstrates the basic structure
@@ -32,7 +37,7 @@ public class Tweet extends BaseModel {
 	private long id;
 
 	@Column
-	private Date createdAt;
+	private String createdAt;
 
 	@Column
 	private boolean favorited;
@@ -60,7 +65,7 @@ public class Tweet extends BaseModel {
 
 		try {
 			id = object.getLong("id");
-			createdAt = new Date(object.getString("created_at"));
+			createdAt = getRelativeTimeAgo(object.getString("created_at"));
 			favorited = object.getBoolean("favorited");
 			text = object.getString("text");
 			reTweetCount = object.getInt("retweet_count");
@@ -94,11 +99,11 @@ public class Tweet extends BaseModel {
 		this.id = id;
 	}
 
-	public Date getCreatedAt() {
+	public String getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
 	}
 
@@ -140,6 +145,23 @@ public class Tweet extends BaseModel {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getRelativeTimeAgo(String rawJsonDate) {
+		String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+		SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
+		sf.setLenient(true);
+
+		String relativeDate = "";
+		try {
+			long dateMillis = sf.parse(rawJsonDate).getTime();
+			relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
+					System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		return relativeDate;
 	}
 
 	// Record Finders

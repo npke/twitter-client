@@ -32,6 +32,13 @@
                 android:layout_toRightOf="@id/text_user_name" />
 
             <TextView
+                tools:text="9h"
+                android:layout_alignParentRight="true"
+                android:id="@+id/text_created_at"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
                 android:id="@+id/text_tweet_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

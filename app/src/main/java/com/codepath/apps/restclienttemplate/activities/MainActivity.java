@@ -1,26 +1,27 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.restclienttemplate.activities;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.ToolbarWidgetWrapper;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.widget.Toast;
 
+import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.RestApplication;
+import com.codepath.apps.restclienttemplate.TwitterClient;
 import com.codepath.apps.restclienttemplate.adapters.TweetAdapter;
 import com.codepath.apps.restclienttemplate.fragments.PostTweetDialogFragment;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.utils.EndlessRecyclerViewScrollListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +37,10 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
 
     PostTweetDialogFragment dialogFragment;
     FragmentManager fragmentManager;
+    LinearLayoutManager layoutManager;
+
+    private int page = 0;
+    private JsonHttpResponseHandler homeTimelineResponseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,22 +54,13 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
 
         adapter = new TweetAdapter(this, new ArrayList<Tweet>());
         rvTweets.setAdapter(adapter);
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        layoutManager = new LinearLayoutManager(this);
+        rvTweets.setLayoutManager(layoutManager);
+        rvTweets.addOnScrollListener(getOnScrollListener(layoutManager));
 
         twitterClient = RestApplication.getRestClient();
-
-        twitterClient.getHomeTimeline(0, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-                ArrayList<Tweet> tweets = Tweet.fromJsonArray(json);
-                adapter.setTweets(tweets);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-            }
-        });
+        homeTimelineResponseHandler = getHomeTimelineResponseHandler();
+        twitterClient.getHomeTimeline(page, homeTimelineResponseHandler);
     }
 
     @Override
@@ -101,5 +97,30 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
+    }
+
+    public JsonHttpResponseHandler getHomeTimelineResponseHandler() {
+        return new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
+                ArrayList<Tweet> tweets = Tweet.fromJsonArray(json);
+                adapter.addTweets(tweets);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        };
+    }
+
+    public EndlessRecyclerViewScrollListener getOnScrollListener(LinearLayoutManager layoutManager) {
+        return new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Toast.makeText(MainActivity.this, "" + page + 1, Toast.LENGTH_SHORT).show();
+                twitterClient.getHomeTimeline(++page, homeTimelineResponseHandler);
+            }
+        };
     }
 }

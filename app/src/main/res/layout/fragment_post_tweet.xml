@@ -1,18 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <EditText
-        android:id="@+id/edit_tweet_body"
-        android:layout_width="match_parent"
-        android:layout_height="300dp" />
-
-    <Button
-        android:id="@+id/button_tweet"
-        android:layout_width="wrap_content"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="tweet"
+            type="com.codepath.apps.restclienttemplate.models.Tweet" />
+        <variable
+            name="counter"
+            type="int" />
+    </data>
+    <RelativeLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="Tweet" />
-</LinearLayout>
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edit_tweet_body"
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:maxLines="7"
+            android:maxLength="150"
+            android:gravity="left|top"
+            android:layout_height="200dp" />
+
+        <Button
+            android:id="@+id/button_tweet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/edit_tweet_body"
+            android:text="Tweet" />
+
+        <TextView
+            android:id="@+id/text_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/button_tweet"
+            android:layout_alignTop="@id/button_tweet"
+            android:layout_below="@id/edit_tweet_body"
+            android:layout_toLeftOf="@id/button_tweet"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="150" />
+    </RelativeLayout>
+</layout>

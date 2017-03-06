@@ -3,13 +3,17 @@ package com.codepath.apps.restclienttemplate.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.databinding.FragmentPostTweetBinding;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,6 +26,11 @@ public class PostTweetDialogFragment extends DialogFragment {
 
     @BindView(R.id.button_tweet)
     Button btnTweet;
+
+    @BindView(R.id.text_counter)
+    TextView tvCounter;
+
+    public static final int MAX_TWEET_CHARACTER = 150;
 
     public interface PostTweetListener {
         void onPostTweet(String tweetBody);
@@ -37,6 +46,22 @@ public class PostTweetDialogFragment extends DialogFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        etTweetBody.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                tvCounter.setText(MAX_TWEET_CHARACTER - charSequence.length() + "");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @OnClick(R.id.button_tweet)

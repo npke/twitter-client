@@ -1,7 +1,6 @@
 package com.codepath.apps.restclienttemplate.activities;
 
 import android.content.Intent;
-import android.os.Parcel;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
     FragmentManager fragmentManager;
     LinearLayoutManager layoutManager;
 
-    private int page = 0;
+    private int currentPage = 0;
     private JsonHttpResponseHandler homeTimelineResponseHandler;
 
     @Override
@@ -62,8 +61,9 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page = 0;
-                twitterClient.getHomeTimeline(page, getHomeTimelineResponseHandler());
+                currentPage = 0;
+                adapter.setTweets(new ArrayList<Tweet>());
+                twitterClient.getHomeTimeline(currentPage, getHomeTimelineResponseHandler());
             }
         });
 
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
 
         twitterClient = RestApplication.getRestClient();
         homeTimelineResponseHandler = getHomeTimelineResponseHandler();
-        twitterClient.getHomeTimeline(page, homeTimelineResponseHandler);
+        twitterClient.getHomeTimeline(currentPage, homeTimelineResponseHandler);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
                 ArrayList<Tweet> tweets = Tweet.fromJsonArray(json);
-                if (page == 0)
+                if (currentPage == 0)
                     adapter.setTweets(tweets);
                 else adapter.addTweets(tweets);
 
@@ -141,8 +141,8 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
         return new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Toast.makeText(MainActivity.this, "" + page, Toast.LENGTH_SHORT).show();
-                twitterClient.getHomeTimeline(++page, homeTimelineResponseHandler);
+                Toast.makeText(MainActivity.this, "Loading currentPage "  + String.valueOf(page + 1), Toast.LENGTH_SHORT).show();
+                twitterClient.getHomeTimeline(++currentPage, homeTimelineResponseHandler);
             }
         };
     }

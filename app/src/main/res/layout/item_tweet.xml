@@ -103,8 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:paddingLeft="8dp"
-                android:text="123" />
+                android:paddingLeft="8dp" />
 
             <ImageView
                 android:layout_width="18dp"
@@ -117,7 +116,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:paddingLeft="8dp"
-                android:text="273" />
+                android:text="@{String.valueOf(tweet.reTweetCount)}"/>
 
             <ImageView
                 android:layout_width="14dp"
@@ -130,7 +129,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:paddingLeft="8dp"
-                android:text="23" />
+                android:text="@{String.valueOf(tweet.favoriteCount)}" />
         </LinearLayout>
 
         <View

@@ -51,6 +51,9 @@ public class Tweet extends BaseModel {
 	public int reTweetCount;
 
 	@Column
+	public int favoriteCount;
+
+	@Column
 	public boolean retweeted;
 
 	@Column
@@ -74,6 +77,7 @@ public class Tweet extends BaseModel {
 			favorited = object.getBoolean("favorited");
 			text = object.getString("text");
 			reTweetCount = object.getInt("retweet_count");
+			favoriteCount = object.getInt("favorite_count");
 			retweeted = object.getBoolean("retweeted");
 			user = new User(object.getJSONObject("user"));
 			if (object.getJSONObject("extended_entities") != null)
@@ -150,6 +154,14 @@ public class Tweet extends BaseModel {
 		return user;
 	}
 
+	public int getFavoriteCount() {
+		return favoriteCount;
+	}
+
+	public void setFavoriteCount(int favoriteCount) {
+		this.favoriteCount = favoriteCount;
+	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -175,6 +187,12 @@ public class Tweet extends BaseModel {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+
+		relativeDate = relativeDate.replace(" ago", "");
+		relativeDate = relativeDate.replace(" hours", "h");
+		relativeDate = relativeDate.replace(" hour", "h");
+		relativeDate = relativeDate.replace(" minutes", "m");
+		relativeDate = relativeDate.replace(" minute", "m");
 
 		return relativeDate;
 	}

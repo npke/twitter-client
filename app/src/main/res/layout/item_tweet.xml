@@ -65,6 +65,7 @@
             android:layout_below="@id/text_user_name"
             android:layout_toRightOf="@id/image_user_profile_photo"
             android:alpha="0.8"
+            android:clickable="true"
             android:autoLink="all"
             android:linksClickable="true"
             android:text="@{tweet.text}"

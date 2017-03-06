@@ -21,5 +21,8 @@ public class TweetDetailActivity extends AppCompatActivity {
         tweet = Parcels.unwrap(getIntent().getParcelableExtra("TWEET"));
         binding = DataBindingUtil.setContentView(this, R.layout.activity_tweet_detail);
         binding.setTweet(tweet);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(tweet.getUser().getName());
     }
 }

@@ -1,6 +1,8 @@
 package com.codepath.apps.restclienttemplate.fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
@@ -42,6 +44,13 @@ public class PostTweetDialogFragment extends DialogFragment {
         return inflater.inflate(R.layout.fragment_post_tweet, container);
     }
 
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        setStyle(STYLE_NO_TITLE, 0);
+        return super.onCreateDialog(savedInstanceState);
+    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -55,6 +64,9 @@ public class PostTweetDialogFragment extends DialogFragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 tvCounter.setText(MAX_TWEET_CHARACTER - charSequence.length() + "");
+                if (charSequence.length() == 0)
+                    btnTweet.setEnabled(false);
+                else btnTweet.setEnabled(true);
             }
 
             @Override
@@ -67,6 +79,7 @@ public class PostTweetDialogFragment extends DialogFragment {
     @OnClick(R.id.button_tweet)
     public void onClick(Button button) {
         String tweetBody = etTweetBody.getText().toString();
+        etTweetBody.setText("");
         PostTweetListener listener = (PostTweetListener) getActivity();
         listener.onPostTweet(tweetBody);
     }

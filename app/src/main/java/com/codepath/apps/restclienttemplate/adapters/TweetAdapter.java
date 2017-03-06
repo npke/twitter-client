@@ -53,8 +53,6 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        View itemView = LayoutInflater.from(parent.getContext())
-//                .inflate(R.layout.item_tweet, parent, false);
 
         ItemTweetBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_tweet, parent, false);
 
@@ -67,19 +65,6 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         User user = tweet.getUser();
 
         holder.itemTweetBinding.setTweet(tweet);
-
-//        Glide.with(mContext)
-//                .load(user.getProfilePhotoUrl())
-//                .into(holder.itemTweetBinding.imageUserProfilePhoto);
-
-//        Glide.with(mContext)
-//                .load(user.getProfilePhotoUrl())
-//                .into(holder.ivUserProfilePhoto);
-//
-//        holder.tvUserDisplayName.setText(user.getName());
-//        holder.tvUserScreenName.setText(user.getUserName());
-//        holder.tvTweetBody.setText(tweet.getText());
-//        holder.tvCreatedAt.setText(tweet.getCreatedAt());
     }
 
     @Override
@@ -88,20 +73,6 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-//        @BindView(R.id.image_user_profile_photo)
-//        ImageView ivUserProfilePhoto;
-//
-//        @BindView(R.id.text_user_name)
-//        TextView tvUserDisplayName;
-//
-//        @BindView(R.id.text_user_screen_name)
-//        TextView tvUserScreenName;
-//
-//        @BindView(R.id.text_tweet_body)
-//        TextView tvTweetBody;
-//
-//        @BindView(R.id.text_created_at)
-//        TextView tvCreatedAt;
 
         public ItemTweetBinding itemTweetBinding;
 
@@ -109,7 +80,12 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             super(itemView);
 
             itemTweetBinding = DataBindingUtil.bind(itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
+            itemTweetBinding.textTweetBody.setOnClickListener(getOnClickListener());
+            itemView.setOnClickListener(getOnClickListener());
+        }
+
+        public View.OnClickListener getOnClickListener() {
+            return new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
@@ -118,9 +94,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                         mListener.onClick(mTweets.get(position));
                     }
                 }
-            });
-
-//            ButterKnife.bind(this, itemView);
+            };
         }
     }
 }

@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.TweetDetailActivity"></activity>
+        <activity android:name=".activities.TweetDetailActivity" android:parentActivityName=".activities.MainActivity"></activity>
     </application>
 
 </manifest>

@@ -3,5 +3,6 @@
 
     <string name="app_name">Twitter Client</string>
     <string name="login_label">Log in</string>
+    <string name="what_s_happening">What\'s happening?</string>
 
 </resources>

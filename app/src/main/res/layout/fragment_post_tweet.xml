@@ -13,11 +13,14 @@
     </data>
 
     <RelativeLayout
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <EditText
+            android:hint="@string/what_s_happening"
             android:id="@+id/edit_tweet_body"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -27,15 +30,25 @@
             android:padding="10dp" />
 
         <Button
+            android:enabled="false"
             android:id="@+id/button_tweet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:minHeight="36dp"
+            android:minWidth="70dp"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:layout_alignRight="@id/edit_tweet_body"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/tweet_button"
             android:layout_below="@id/edit_tweet_body"
             android:text="Tweet" />
 
         <TextView
+            android:textColor="@color/colorPrimary"
             android:id="@+id/text_counter"
+            android:textAllCaps="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/button_tweet"

@@ -141,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
         return new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Toast.makeText(MainActivity.this, "Loading currentPage "  + String.valueOf(page + 1), Toast.LENGTH_SHORT).show();
                 twitterClient.getHomeTimeline(++currentPage, homeTimelineResponseHandler);
             }
         };

@@ -55,6 +55,9 @@ public class Tweet extends BaseModel {
 	@ForeignKey(saveForeignKeyModel = false)
 	private User user;
 
+//	@Column
+//	@ForeignKey(saveForeignKeyModel = false)
+	private ExtendedEntity extendedEntity;
 
 	public Tweet() {
 		super();
@@ -71,6 +74,8 @@ public class Tweet extends BaseModel {
 			reTweetCount = object.getInt("retweet_count");
 			retweeted = object.getBoolean("retweeted");
 			user = new User(object.getJSONObject("user"));
+			if (object.getJSONObject("extended_entities") != null)
+				extendedEntity = new ExtendedEntity(object.getJSONObject("extended_entities"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -145,6 +150,14 @@ public class Tweet extends BaseModel {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public ExtendedEntity getExtendedEntity() {
+		return extendedEntity;
+	}
+
+	public void setExtendedEntity(ExtendedEntity extendedEntity) {
+		this.extendedEntity = extendedEntity;
 	}
 
 	public String getRelativeTimeAgo(String rawJsonDate) {

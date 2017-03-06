@@ -9,10 +9,12 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 
 //@Table(database = MyDatabase.class)
+@Parcel
 public class ExtendedEntity extends BaseModel {
 
     //@Column @PrimaryKey

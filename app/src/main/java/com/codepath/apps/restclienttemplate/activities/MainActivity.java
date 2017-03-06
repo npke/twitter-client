@@ -1,5 +1,7 @@
 package com.codepath.apps.restclienttemplate.activities;
 
+import android.content.Intent;
+import android.os.Parcel;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +23,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -28,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
-public class MainActivity extends AppCompatActivity implements PostTweetDialogFragment.PostTweetListener {
+public class MainActivity extends AppCompatActivity implements PostTweetDialogFragment.PostTweetListener, TweetAdapter.TweetClickListener {
 
     private TwitterClient twitterClient;
     private TweetAdapter adapter;
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
         });
 
         adapter = new TweetAdapter(this, new ArrayList<Tweet>());
+        adapter.setListener(this);
         rvTweets.setAdapter(adapter);
         layoutManager = new LinearLayoutManager(this);
         rvTweets.setLayoutManager(layoutManager);
@@ -141,5 +145,12 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
                 twitterClient.getHomeTimeline(++page, homeTimelineResponseHandler);
             }
         };
+    }
+
+    @Override
+    public void onClick(Tweet tweet) {
+        Intent intent = new Intent(this, TweetDetailActivity.class);
+        intent.putExtra("TWEET", Parcels.wrap(tweet));
+        startActivity(intent);
     }
 }

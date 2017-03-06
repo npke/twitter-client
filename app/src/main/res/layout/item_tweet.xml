@@ -68,9 +68,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/text_tweet_body"
+                    android:layout_toRightOf="@id/image_user_profile_photo"
                     android:adjustViewBounds="true"
-                    app:imageUrl="@{tweet.extendedEntity.media.get(0).mediaUrlHttps}"
-                    android:scaleType="fitCenter" />
+                    android:scaleType="fitCenter"
+                    app:imageUrl="@{tweet.extendedEntity.media.get(0).mediaUrlHttps}" />
 
                 <LinearLayout
                     android:id="@+id/layout_action"

@@ -13,6 +13,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,34 +31,35 @@ import java.util.Locale;
  * 
  */
 @Table(database = MyDatabase.class)
+@Parcel
 public class Tweet extends BaseModel {
 
 	@PrimaryKey
 	@Column
-	private long id;
+	public long id;
 
 	@Column
-	private String createdAt;
+	public String createdAt;
 
 	@Column
-	private boolean favorited;
+	public boolean favorited;
 
 	@Column
-	private String text;
+	public String text;
 
 	@Column
-	private int reTweetCount;
+	public int reTweetCount;
 
 	@Column
-	private boolean retweeted;
+	public boolean retweeted;
 
 	@Column
 	@ForeignKey(saveForeignKeyModel = false)
-	private User user;
+	public User user;
 
 //	@Column
 //	@ForeignKey(saveForeignKeyModel = false)
-	private ExtendedEntity extendedEntity;
+	public ExtendedEntity extendedEntity;
 
 	public Tweet() {
 		super();

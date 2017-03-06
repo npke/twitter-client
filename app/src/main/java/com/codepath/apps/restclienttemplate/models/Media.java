@@ -9,8 +9,10 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 //@Table(database = MyDatabase.class)
+@Parcel
 public class Media extends BaseModel {
 
   //  @Column @PrimaryKey

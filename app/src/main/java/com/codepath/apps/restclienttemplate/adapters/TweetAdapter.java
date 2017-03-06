@@ -18,6 +18,11 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
     private List<Tweet> mTweets;
     private Context mContext;
+    private TweetClickListener mListener;
+
+    public interface TweetClickListener {
+        public void onClick(Tweet tweet);
+    }
 
     public TweetAdapter(Context context, List<Tweet> tweets) {
         mContext = context;
@@ -27,6 +32,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     public void setTweets(List<Tweet> tweets) {
         mTweets = tweets;
         notifyDataSetChanged();
+    }
+
+    public void setListener(TweetClickListener listener) {
+        this.mListener = listener;
     }
 
     public void addTweets(List<Tweet> tweets) {
@@ -100,6 +109,16 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             super(itemView);
 
             itemTweetBinding = DataBindingUtil.bind(itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+
+                    if (position != RecyclerView.NO_POSITION) {
+                        mListener.onClick(mTweets.get(position));
+                    }
+                }
+            });
 
 //            ButterKnife.bind(this, itemView);
         }

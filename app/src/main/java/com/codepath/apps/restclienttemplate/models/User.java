@@ -9,21 +9,23 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 @Table(database = MyDatabase.class)
+@Parcel
 public class User extends BaseModel {
     @Column
     @PrimaryKey
-    private int id;
+    public int id;
 
     @Column
-    private String name;
+    public String name;
 
     @Column
-    private String profilePhotoUrl;
+    public String profilePhotoUrl;
 
     @Column
-    private String userName;
+    public String userName;
 
     public User() {
     }

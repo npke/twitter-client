@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
+
         <variable
             name="tweet"
             type="com.codepath.apps.restclienttemplate.models.Tweet" />
+
         <variable
             name="counter"
             type="int" />
     </data>
-    <RelativeLayout android:layout_width="match_parent"
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <EditText
             android:id="@+id/edit_tweet_body"
             android:layout_width="match_parent"
-            android:padding="10dp"
-            android:maxLines="7"
-            android:maxLength="150"
+            android:layout_height="200dp"
             android:gravity="left|top"
-            android:layout_height="200dp" />
+            android:maxLength="150"
+            android:maxLines="7"
+            android:padding="10dp" />
 
         <Button
             android:id="@+id/button_tweet"

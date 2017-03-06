@@ -13,94 +13,132 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:padding="10dp">
 
-        <android.support.v7.widget.CardView
+        <ImageView
+            android:id="@+id/image_user_profile_photo"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginRight="8dp"
+            app:imageUrl="@{tweet.user.profilePhotoUrl}"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/text_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/image_user_profile_photo"
+            android:alpha="0.8"
+            android:text="@{tweet.user.name}"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="INSIDER" />
+
+        <TextView
+            android:id="@+id/text_user_screen_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/text_user_name"
+            android:layout_alignTop="@id/text_user_name"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/text_user_name"
+            android:gravity="center"
+            android:text="@{tweet.user.userName}"
+            android:textSize="13sp"
+            tools:text="\@thisisinsider" />
+
+        <TextView
+            android:id="@+id/text_created_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="@{tweet.createdAt}"
+            android:textSize="13sp"
+            tools:text="9h" />
+
+        <TextView
+            android:id="@+id/text_tweet_body"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_user_name"
+            android:layout_toRightOf="@id/image_user_profile_photo"
+            android:alpha="0.8"
+            android:autoLink="all"
+            android:linksClickable="true"
+            android:text="@{tweet.text}"
+            android:textColor="#000"
+            tools:text="In addition, we can also add functions into the model to support parsing JSON attributes in order to instantiate the model based on API data. This might look like:" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/image_media"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_tweet_body"
+            android:layout_toRightOf="@id/image_user_profile_photo"
+            android:adjustViewBounds="true"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/nokia"
+            app:imageUrl="@{tweet.extendedEntity.media.get(0).mediaUrlHttps}" />
 
-                <ImageView
-                    android:id="@+id/image_user_profile_photo"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:padding="10dp"
-                    app:imageUrl="@{tweet.user.profilePhotoUrl}" />
+        <LinearLayout
+            android:paddingTop="5dp"
+            android:id="@+id/layout_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image_media"
+            android:layout_toRightOf="@id/image_user_profile_photo"
+            android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/text_user_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/image_user_profile_photo"
-                    android:text="@{tweet.user.name}" />
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/reply" />
 
-                <TextView
-                    android:id="@+id/text_user_screen_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/text_user_name"
-                    android:text="@{tweet.user.userName}" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:paddingLeft="8dp"
+                android:text="123" />
 
-                <TextView
-                    android:id="@+id/text_created_at"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="@{tweet.createdAt}"
-                    tools:text="9h" />
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/retweet" />
 
-                <TextView
-                    android:id="@+id/text_tweet_body"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/text_user_name"
-                    android:layout_toRightOf="@id/image_user_profile_photo"
-                    android:autoLink="all"
-                    android:linksClickable="true"
-                    android:text="@{tweet.text}"
-                    tools:text="In addition, we can also add functions into the model to support parsing JSON attributes in order to instantiate the model based on API data. This might look like:" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:paddingLeft="8dp"
+                android:text="273" />
 
-                <ImageView
-                    android:id="@+id/image_media"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/text_tweet_body"
-                    android:layout_toRightOf="@id/image_user_profile_photo"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    app:imageUrl="@{tweet.extendedEntity.media.get(0).mediaUrlHttps}" />
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/love" />
 
-                <LinearLayout
-                    android:id="@+id/layout_action"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/image_media"
-                    android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:paddingLeft="8dp"
+                android:text="23" />
+        </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center" />
-                </LinearLayout>
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/layout_action"
+            android:layout_marginTop="8dp"
+            android:alpha="0.2"
+            android:background="#000000" />
     </RelativeLayout>
 </layout>

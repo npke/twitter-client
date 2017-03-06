@@ -34,7 +34,7 @@ public class User extends BaseModel {
         try {
             id = json.getInt("id");
             name = json.getString("name");
-            userName = json.getString("screen_name");
+            userName = "@" + json.getString("screen_name");
             profilePhotoUrl = json.getString("profile_image_url_https");
         } catch (JSONException e) {
             e.printStackTrace();

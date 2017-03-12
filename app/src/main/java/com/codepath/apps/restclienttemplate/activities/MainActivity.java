@@ -1,7 +1,9 @@
 package com.codepath.apps.restclienttemplate.activities;
 
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.RestApplication;
 import com.codepath.apps.restclienttemplate.TwitterClient;
 import com.codepath.apps.restclienttemplate.adapters.TweetAdapter;
+import com.codepath.apps.restclienttemplate.adapters.TweetPagerFragmentAdapter;
 import com.codepath.apps.restclienttemplate.fragments.PostTweetDialogFragment;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.apps.restclienttemplate.utils.EndlessRecyclerViewScrollListener;
@@ -30,16 +33,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
-public class MainActivity extends AppCompatActivity implements PostTweetDialogFragment.PostTweetListener, TweetAdapter.TweetClickListener {
+public class MainActivity extends AppCompatActivity implements PostTweetDialogFragment.PostTweetListener {
 
     private TwitterClient twitterClient;
     private TweetAdapter adapter;
 
-    @BindView(R.id.recycler_tweets)
-    RecyclerView rvTweets;
+//    @BindView(R.id.recycler_tweets)
+//    RecyclerView rvTweets;
+//
+//    @BindView(R.id.swipe_layout)
+//    SwipeRefreshLayout swipeRefreshLayout;
 
-    @BindView(R.id.swipe_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.pager_tweet)
+    ViewPager pagerTweet;
+
+    @BindView(R.id.tab_tweet)
+    TabLayout tabTweet;
 
     PostTweetDialogFragment dialogFragment;
     FragmentManager fragmentManager;
@@ -58,25 +67,28 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
         dialogFragment = new PostTweetDialogFragment();
         fragmentManager = getSupportFragmentManager();
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                currentPage = 0;
-                adapter.setTweets(new ArrayList<Tweet>());
-                twitterClient.getHomeTimeline(currentPage, getHomeTimelineResponseHandler());
-            }
-        });
+        pagerTweet.setAdapter(new TweetPagerFragmentAdapter(getSupportFragmentManager()));
+        tabTweet.setupWithViewPager(pagerTweet);
 
-        adapter = new TweetAdapter(this, new ArrayList<Tweet>());
-        adapter.setListener(this);
-        rvTweets.setAdapter(adapter);
-        layoutManager = new LinearLayoutManager(this);
-        rvTweets.setLayoutManager(layoutManager);
-        rvTweets.addOnScrollListener(getOnScrollListener(layoutManager));
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                currentPage = 0;
+//                adapter.setTweets(new ArrayList<Tweet>());
+//                twitterClient.getHomeTimeline(currentPage, getHomeTimelineResponseHandler());
+//            }
+//        });
 
-        twitterClient = RestApplication.getRestClient();
-        homeTimelineResponseHandler = getHomeTimelineResponseHandler();
-        twitterClient.getHomeTimeline(currentPage, homeTimelineResponseHandler);
+//        adapter = new TweetAdapter(this, new ArrayList<Tweet>());
+//        adapter.setListener(this);
+//        rvTweets.setAdapter(adapter);
+//        layoutManager = new LinearLayoutManager(this);
+//        rvTweets.setLayoutManager(layoutManager);
+//        rvTweets.addOnScrollListener(getOnScrollListener(layoutManager));
+
+//        twitterClient = RestApplication.getRestClient();
+//        homeTimelineResponseHandler = getHomeTimelineResponseHandler();
+//        twitterClient.getHomeTimeline(currentPage, homeTimelineResponseHandler);
     }
 
     @Override
@@ -116,40 +128,4 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
         });
     }
 
-    public JsonHttpResponseHandler getHomeTimelineResponseHandler() {
-        return new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-                ArrayList<Tweet> tweets = Tweet.fromJsonArray(json);
-                if (currentPage == 0)
-                    adapter.setTweets(tweets);
-                else adapter.addTweets(tweets);
-
-                swipeRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                swipeRefreshLayout.setRefreshing(false);
-                Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
-    }
-
-    public EndlessRecyclerViewScrollListener getOnScrollListener(LinearLayoutManager layoutManager) {
-        return new EndlessRecyclerViewScrollListener(layoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                twitterClient.getHomeTimeline(++currentPage, homeTimelineResponseHandler);
-            }
-        };
-    }
-
-    @Override
-    public void onClick(Tweet tweet) {
-        Intent intent = new Intent(this, TweetDetailActivity.class);
-        intent.putExtra("TWEET", Parcels.wrap(tweet));
-        startActivity(intent);
-    }
 }

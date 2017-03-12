@@ -27,6 +27,18 @@ public class User extends BaseModel {
     @Column
     public String userName;
 
+    @Column
+    public int followingCount;
+
+    @Column
+    public int followerCount;
+
+    @Column
+    public String tagLine;
+
+    @Column
+    public String coverPhotoUrl;
+
     public User() {
     }
 
@@ -36,6 +48,10 @@ public class User extends BaseModel {
             name = json.getString("name");
             userName = "@" + json.getString("screen_name");
             profilePhotoUrl = json.getString("profile_image_url_https");
+            followerCount = json.getInt("followers_count");
+            followingCount = json.getInt("friends_count");
+            tagLine = json.getString("description");
+            coverPhotoUrl = json.getString("profile_background_image_url_https");
         } catch (JSONException e) {
             e.printStackTrace();
         }

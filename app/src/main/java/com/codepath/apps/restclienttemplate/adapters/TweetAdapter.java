@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.activities.ProfileActivity;
 import com.codepath.apps.restclienttemplate.databinding.ItemTweetBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.apps.restclienttemplate.models.User;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -82,6 +86,15 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             itemTweetBinding = DataBindingUtil.bind(itemView);
             itemTweetBinding.textTweetBody.setOnClickListener(getOnClickListener());
             itemView.setOnClickListener(getOnClickListener());
+            itemTweetBinding.imageUserProfilePhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    User user = mTweets.get(getAdapterPosition()).user;
+                    Intent intent = new Intent(mContext, ProfileActivity.class);
+                    intent.putExtra("USER", Parcels.wrap(user));
+                    mContext.startActivity(intent);
+                }
+            });
         }
 
         public View.OnClickListener getOnClickListener() {

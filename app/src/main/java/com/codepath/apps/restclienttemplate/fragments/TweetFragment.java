@@ -66,6 +66,7 @@ public abstract class TweetFragment extends Fragment implements SwipeRefreshLayo
         rvTweets.setAdapter(adapter);
         layoutManager = new LinearLayoutManager(getContext());
         rvTweets.setLayoutManager(layoutManager);
+        rvTweets.setNestedScrollingEnabled(false);
 
         scrollListener = getOnScrollListener();
         rvTweets.addOnScrollListener(scrollListener);

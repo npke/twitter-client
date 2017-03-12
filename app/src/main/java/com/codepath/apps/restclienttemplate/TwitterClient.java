@@ -6,6 +6,7 @@ import org.scribe.builder.api.TwitterApi;
 
 import android.content.Context;
 
+import com.codepath.apps.restclienttemplate.models.User;
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -66,6 +67,11 @@ public class TwitterClient extends OAuthBaseClient {
         String apiUrl = getApiUrl("account/verify_credentials.json");
         getClient().get(apiUrl, null, handler);
     }
+
+	public void getUserTimelineTweet(int currentPage, User user, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/user_timeline.json");
+		getClient().get(apiUrl, new RequestParams("user_id", user.id), handler);
+	}
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
 	 * 	  i.e getApiUrl("statuses/home_timeline.json");

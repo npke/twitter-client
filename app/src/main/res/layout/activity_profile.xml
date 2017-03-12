@@ -10,112 +10,117 @@
             type="com.codepath.apps.restclienttemplate.models.User" />
     </data>
 
-    <RelativeLayout
+    <ScrollView
+        android:fillViewport="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.codepath.apps.restclienttemplate.activities.ProfileActivity">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/image_user_cover"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:scaleType="centerCrop"
-            app:imageUrl="@{user.coverPhotoUrl}" />
-
-        <ImageView
-            android:id="@+id/image_user_profile_photo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_below="@id/image_user_cover"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="-45dp"
-            android:scaleType="fitCenter"
-            app:imageUrl="@{user.profilePhotoUrl}" />
-
-        <TextView
-            android:id="@+id/text_display_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/image_user_profile_photo"
-            android:layout_below="@id/image_user_profile_photo"
-            android:alpha="0.8"
-            android:paddingTop="10dp"
-            android:text="@{user.name}"
-            android:textColor="#000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/text_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/image_user_profile_photo"
-            android:layout_below="@id/text_display_name"
-            android:paddingBottom="10dp"
-            android:paddingTop="5dp"
-            android:text="@{user.userName}" />
-
-        <TextView
-            android:id="@+id/text_tagline"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_user_name"
-            android:paddingBottom="15dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="@{user.tagLine}" />
+            tools:context="com.codepath.apps.restclienttemplate.activities.ProfileActivity">
 
-        <TextView
-            android:id="@+id/text_following_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/image_user_profile_photo"
-            android:layout_below="@id/text_tagline"
-            android:alpha="0.8"
-            android:text="@{String.valueOf(user.followingCount)}"
-            android:textColor="#000"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/image_user_cover"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{user.coverPhotoUrl}" />
 
-        <TextView
-            android:id="@+id/text_following"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/text_following_count"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/text_following_count"
-            android:text="FOLLOWING"
-            android:textSize="14sp" />
+            <ImageView
+                android:id="@+id/image_user_profile_photo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_below="@id/image_user_cover"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="-45dp"
+                android:scaleType="fitCenter"
+                app:imageUrl="@{user.profilePhotoUrl}" />
 
-        <TextView
-            android:id="@+id/text_follower_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_tagline"
-            android:layout_marginLeft="50dp"
-            android:layout_toRightOf="@id/text_following"
-            android:alpha="0.8"
-            android:text="@{String.valueOf(user.followerCount)}"
-            android:textColor="#000"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/text_display_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/image_user_profile_photo"
+                android:layout_below="@id/image_user_profile_photo"
+                android:alpha="0.8"
+                android:paddingTop="10dp"
+                android:text="@{user.name}"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/text_following_count"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/text_follower_count"
-            android:text="FOLLOWERS"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/text_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/image_user_profile_photo"
+                android:layout_below="@id/text_display_name"
+                android:paddingBottom="10dp"
+                android:text="@{user.userName}" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_tweets"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_follower_count"
-            android:paddingTop="10dp" />
+            <TextView
+                android:id="@+id/text_tagline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_user_name"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@{user.tagLine}" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/text_following_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/image_user_profile_photo"
+                android:layout_below="@id/text_tagline"
+                android:alpha="0.8"
+                android:text="@{String.valueOf(user.followingCount)}"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_following"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/text_following_count"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/text_following_count"
+                android:text="FOLLOWING"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/text_follower_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_tagline"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/text_following"
+                android:alpha="0.8"
+                android:text="@{String.valueOf(user.followerCount)}"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/text_following_count"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/text_follower_count"
+                android:text="FOLLOWERS"
+                android:textSize="14sp" />
+
+            <FrameLayout
+                android:id="@+id/frame_user_timeline"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/text_follower_count"
+                android:paddingTop="10dp" />
+
+        </RelativeLayout>
+    </ScrollView>
 </layout>
 

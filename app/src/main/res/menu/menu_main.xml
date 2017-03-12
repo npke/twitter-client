@@ -6,4 +6,10 @@
         android:icon="@drawable/compose"
         android:title="Tweet"
         apps:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_user"
+        android:icon="@drawable/user"
+        android:title="Profile"
+        apps:showAsAction="always" />
 </menu>

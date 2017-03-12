@@ -104,6 +104,10 @@ public class MainActivity extends AppCompatActivity implements PostTweetDialogFr
 
                 dialogFragment.show(fragmentManager, "Post tweet fragment");
                 return true;
+
+            case R.id.menu_user:
+                startActivity(new Intent(this, ProfileActivity.class));
+                return true;
         }
 
         return false;
